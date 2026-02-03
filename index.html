@@ -7,7 +7,7 @@
     
     <!-- Meta tags PWA -->
     <meta name="theme-color" content="#208090">
-    <meta name="description" content="Genera presupuestos profesionales">
+    <meta name="description" content="Genera presupuestos profesionales para SERVI AGRO y SERVI MOTO MOLINA">
     <meta name="application-name" content="Presupuestos">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,12 +23,12 @@
     
     <!-- Manifest PWA -->
     <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIlByZXN1cHVlc3RvcyIsCiAgInNob3J0X25hbWUiOiAiUHJlc3VwdWVzdG9zIiwKICAiZGVzY3JpcHRpb24iOiAiR2VuZXJhIHByZXN1cHVlc3RvcyBwcm9mZXNpb25hbGVzIHBhcmEgU0VSVkkgQUdSTyB5IFNFUlZJIE1PVE8gTU9MSU5BIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMyMDgwOTAiLAogICJ0aGVtZV9jb2xvciI6ICIjMjA4MDkwIiwKICAib3JpZW50YXRpb24iOiAiYW55IiwKICAic2NvcGUiOiAiLiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIZHBaSFJvUFNJeU5qQWlJR2hsYVdkb2REMGlNVEF5SWlCb1pXbG5hSFE5SWpFd01DSWdkbWxsZDBKdmVEMGlNVEV3SlRJZ01UQTVJajRtSTNoaE96d3ZjM1puSwp9Igp9">
-    <link rel="stylesheet" href="/estilos.css">
+     <link rel="stylesheet" href="css/estilos.css">
     <!-- Incluir jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     
-    
+  
 </head>
 <body>
     <!-- Banner de estado offline -->
@@ -41,15 +41,50 @@
         📱 Instalar App
     </button>
 
+    <!-- Modal para compartir por correo -->
+    <div id="emailModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">📧 Enviar Presupuesto por Correo</h3>
+                <button class="modal-close" onclick="cerrarModalEmail()">×</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Destinatario:</label>
+                <input type="email" id="emailDestinatario" placeholder="correo@cliente.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Asunto:</label>
+                <input type="text" id="emailAsunto" placeholder="Asunto del correo">
+            </div>
+            
+            <div class="form-group">
+                <label>Mensaje adicional (opcional):</label>
+                <textarea id="emailMensaje" placeholder="Añade un mensaje personalizado..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Vista previa del correo:</label>
+                <div id="emailPreview" class="email-preview"></div>
+            </div>
+            
+            <div class="email-actions">
+                <button class="btn btn-secondary" onclick="cerrarModalEmail()">Cancelar</button>
+                <button class="btn btn-email" onclick="enviarCorreo()">📤 Enviar Correo</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <div class="header-left">
-                <h1>📊MIS PRESUPUESTOS</h1>
-                <p class="subtitle">Genera presupuestos de manera Profesional</p>
+                <h1>📊GESTION PRESUPUESTOS</h1>
+                <p class="subtitle">Genera presupuestos de manera Profesional[by AndrésDev]</p>
             </div>
             <div class="business-selector">
                 <div class="business-badge" id="currentBusiness">
-                    SERVI AGRO
+                    <span class="business-name-servi">SERVI</span> <span class="business-name-agro">AGRO</span>
                 </div>
             </div>
         </header>
@@ -60,10 +95,10 @@
                 <div class="section-title">Seleccionar Razón Social</div>
                 <div class="business-options">
                     <button class="business-btn active" onclick="cambiarRazonSocial('serviagro')">
-                        SERVI AGRO
+                        <span class="business-name-servi">SERVI</span> <span class="business-name-agro">AGRO</span>
                     </button>
                     <button class="business-btn" onclick="cambiarRazonSocial('servimoto')">
-                        SERVI MOTO MOLINA
+                        <span class="business-name-servi">SERVI</span> <span class="business-name-moto">MOTO MOLINA</span>
                     </button>
                 </div>
 
@@ -140,8 +175,11 @@
                     </div>
                 </div>
 
-                <button class="btn btn-export" onclick="generarPDF()">📥 Descargar PDF</button>
-                <button class="btn btn-export" onclick="imprimirPresupuesto()" style="background: #3498db;">🖨️ Imprimir</button>
+                <div class="export-buttons">
+                    <button class="btn btn-export" onclick="generarPDF()">📥 Descargar PDF</button>
+                    <button class="btn btn-export" onclick="imprimirPresupuesto()" style="background: #3498db;">🖨️ Imprimir</button>
+                    <button class="btn btn-email" onclick="compartirPorCorreo()">📧 Enviar por Correo</button>
+                </div>
             </div>
         </div>
     </div>
@@ -161,12 +199,14 @@
         const razonesSociales = {
             serviagro: {
                 nombre: "SERVI AGRO",
+                nombreFormateado: "<span class='budget-company-servi'>SERVI</span> <span class='budget-company-agro'>AGRO</span>",
                 rut: "13.156.369-8",
                 direccion: "QUECHEREGUAS 2356, MOLINA, Chile",
                 contacto: "servimotomolina@gmail.com - +56 9 1234 5678"
             },
             servimoto: {
                 nombre: "SERVI MOTO MOLINA",
+                nombreFormateado: "<span class='budget-company-servi'>SERVI</span> <span class='budget-company-moto'>MOTO MOLINA</span>",
                 rut: "13.156.369-8",
                 direccion: "QUECHEREGUAS 2356, Molina, Chile",
                 contacto: "servimotomolina@gmail.com - +56 9 8765 4321"
@@ -289,6 +329,416 @@
         // Inicializar estado de conexión
         updateOnlineStatus();
 
+        // ========== FUNCIONALIDAD DE CORREO ==========
+
+        // Función para abrir modal de correo
+        function compartirPorCorreo() {
+            if (storage.items.length === 0) {
+                alert('Agrega items al presupuesto antes de compartirlo por correo');
+                return;
+            }
+
+            // Obtener email del cliente si está disponible
+            const clienteEmail = extraerEmail(storage.cliente.contacto) || '';
+            
+            // Configurar campos del modal
+            document.getElementById('emailDestinatario').value = clienteEmail;
+            document.getElementById('emailAsunto').value = generarAsuntoCorreo();
+            document.getElementById('emailMensaje').value = '';
+            
+            // Generar vista previa
+            actualizarVistaPreviaCorreo();
+            
+            // Mostrar modal
+            document.getElementById('emailModal').classList.add('show');
+        }
+
+        // Función para cerrar modal
+        function cerrarModalEmail() {
+            document.getElementById('emailModal').classList.remove('show');
+        }
+
+        // Extraer email de un texto que puede contener email y teléfono
+        function extraerEmail(texto) {
+            if (!texto) return '';
+            
+            // Buscar patrones de email
+            const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+            const matches = texto.match(emailRegex);
+            
+            return matches ? matches[0] : '';
+        }
+
+        // Generar asunto automático para el correo
+        function generarAsuntoCorreo() {
+            const numeroPresupuesto = storage.ultimoNumeroPresupuesto;
+            const nombreCliente = storage.cliente.nombre || 'Cliente';
+            const nombreEmpresa = storage.cliente.empresa || '';
+            
+            let asunto = `Presupuesto Nº ${numeroPresupuesto} - ${storage.empresa.nombre}`;
+            
+            if (nombreEmpresa) {
+                asunto += ` para ${nombreEmpresa}`;
+            } else if (nombreCliente) {
+                asunto += ` para ${nombreCliente}`;
+            }
+            
+            return asunto;
+        }
+
+        // Generar cuerpo del correo en texto plano
+        function generarCuerpoCorreo(mensajeAdicional = '') {
+            const fecha = new Date().toLocaleDateString('es-CL', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const subtotal = storage.items.reduce((sum, item) => sum + (item.cantidad * item.valor), 0);
+            const iva = subtotal * 0.19;
+            const total = subtotal + iva;
+
+            let cuerpo = `PRESUPUESTO Nº ${storage.ultimoNumeroPresupuesto}\n`;
+            cuerpo += `========================================\n\n`;
+            
+            // Información de la empresa
+            cuerpo += `DE: ${storage.empresa.nombre}\n`;
+            if (storage.empresa.rut) cuerpo += `RUT: ${storage.empresa.rut}\n`;
+            if (storage.empresa.direccion) cuerpo += `Dirección: ${storage.empresa.direccion}\n`;
+            if (storage.empresa.contacto) cuerpo += `Contacto: ${storage.empresa.contacto}\n\n`;
+            
+            // Información del cliente
+            cuerpo += `PARA: ${storage.cliente.nombre || 'No especificado'}\n`;
+            if (storage.cliente.empresa) cuerpo += `Empresa: ${storage.cliente.empresa}\n`;
+            if (storage.cliente.direccion) cuerpo += `Dirección: ${storage.cliente.direccion}\n`;
+            if (storage.cliente.contacto) cuerpo += `Contacto: ${storage.cliente.contacto}\n\n`;
+            
+            cuerpo += `Fecha: ${fecha}\n`;
+            cuerpo += `Válido por: 30 días\n\n`;
+            cuerpo += `========================================\n\n`;
+            
+            // Items del presupuesto
+            cuerpo += `DETALLE DEL PRESUPUESTO:\n\n`;
+            cuerpo += `Descripción\t\tCant.\tValor Unit.\tTotal\n`;
+            cuerpo += `-----------\t\t----\t----------\t-----\n`;
+            
+            storage.items.forEach(item => {
+                const itemTotal = item.cantidad * item.valor;
+                const descripcion = item.descripcion.length > 20 ? 
+                    item.descripcion.substring(0, 17) + '...' : 
+                    item.descripcion.padEnd(20, ' ');
+                    
+                cuerpo += `${descripcion}\t${item.cantidad}\t$${item.valor.toLocaleString('es-CL')}\t$${itemTotal.toLocaleString('es-CL')}\n`;
+            });
+            
+            cuerpo += `\n========================================\n\n`;
+            
+            // Totales
+            cuerpo += `SUBTOTAL: $${subtotal.toLocaleString('es-CL')}\n`;
+            cuerpo += `IVA (19%): $${iva.toLocaleString('es-CL')}\n`;
+            cuerpo += `TOTAL: $${total.toLocaleString('es-CL')}\n\n`;
+            
+            cuerpo += `========================================\n\n`;
+            
+            // Mensaje adicional
+            if (mensajeAdicional) {
+                cuerpo += `Mensaje adicional:\n${mensajeAdicional}\n\n`;
+            }
+            
+            // Notas y condiciones
+            cuerpo += `CONDICIONES:\n`;
+            cuerpo += `- Este presupuesto es válido por 30 días a partir de la fecha indicada.\n`;
+            cuerpo += `- Los precios incluyen IVA (19%).\n`;
+            cuerpo += `- Formas de pago: Transferencia bancaria, efectivo.\n`;
+            cuerpo += `- Tiempo de entrega/acordar con el cliente.\n\n`;
+            
+            cuerpo += `Atentamente,\n`;
+            cuerpo += `${storage.empresa.nombre}\n\n`;
+            
+            cuerpo += `========================================\n`;
+            cuerpo += `Este presupuesto fue generado automáticamente con la aplicación de Presupuestos.\n`;
+            
+            return cuerpo;
+        }
+
+        // Generar cuerpo del correo en HTML
+        function generarCuerpoCorreoHTML(mensajeAdicional = '') {
+            const fecha = new Date().toLocaleDateString('es-CL', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const subtotal = storage.items.reduce((sum, item) => sum + (item.cantidad * item.valor), 0);
+            const iva = subtotal * 0.19;
+            const total = subtotal + iva;
+
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            max-width: 800px;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+                        .header {
+                            background-color: #208090;
+                            color: white;
+                            padding: 20px;
+                            text-align: center;
+                            border-radius: 8px 8px 0 0;
+                        }
+                        .content {
+                            border: 1px solid #ddd;
+                            border-top: none;
+                            padding: 20px;
+                            border-radius: 0 0 8px 8px;
+                        }
+                        .section {
+                            margin-bottom: 25px;
+                            padding-bottom: 15px;
+                            border-bottom: 1px solid #eee;
+                        }
+                        .section-title {
+                            color: #208090;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                            font-size: 16px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin: 15px 0;
+                        }
+                        th {
+                            background-color: #f0f0f0;
+                            padding: 10px;
+                            text-align: left;
+                            border: 1px solid #ddd;
+                        }
+                        td {
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                        }
+                        .totals {
+                            background-color: #f9f9f9;
+                            padding: 15px;
+                            border-radius: 5px;
+                            margin: 20px 0;
+                        }
+                        .total-row {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 8px;
+                        }
+                        .total-row:last-child {
+                            font-weight: bold;
+                            font-size: 18px;
+                            border-top: 2px solid #208090;
+                            padding-top: 10px;
+                            margin-top: 10px;
+                        }
+                        .footer {
+                            margin-top: 30px;
+                            padding-top: 20px;
+                            border-top: 1px solid #ddd;
+                            color: #666;
+                            font-size: 12px;
+                        }
+                        .message-box {
+                            background-color: #f0f7ff;
+                            padding: 15px;
+                            border-left: 4px solid #208090;
+                            margin: 20px 0;
+                            border-radius: 4px;
+                        }
+                        .empresa-nombre {
+                            font-weight: bold;
+                        }
+                        .empresa-servi {
+                            font-weight: 900;
+                        }
+                        .empresa-agro {
+                            color: #e74c3c;
+                            font-weight: bold;
+                        }
+                        .empresa-moto {
+                            color: #e74c3c;
+                            font-weight: bold;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>PRESUPUESTO Nº ${storage.ultimoNumeroPresupuesto}</h1>
+                        <p><span class="empresa-servi">SERVI</span> <span class="empresa-${storage.razonSocialActual === 'serviagro' ? 'agro' : 'moto'}">${storage.razonSocialActual === 'serviagro' ? 'AGRO' : 'MOTO MOLINA'}</span></p>
+                    </div>
+                    
+                    <div class="content">
+                        <div class="section">
+                            <div class="section-title">Información de la Empresa</div>
+                            <p><strong><span class="empresa-servi">SERVI</span> <span class="empresa-${storage.razonSocialActual === 'serviagro' ? 'agro' : 'moto'}">${storage.razonSocialActual === 'serviagro' ? 'AGRO' : 'MOTO MOLINA'}</span></strong></p>
+                            ${storage.empresa.rut ? `<p><strong>RUT:</strong> ${storage.empresa.rut}</p>` : ''}
+                            ${storage.empresa.direccion ? `<p><strong>Dirección:</strong> ${storage.empresa.direccion}</p>` : ''}
+                            ${storage.empresa.contacto ? `<p><strong>Contacto:</strong> ${storage.empresa.contacto}</p>` : ''}
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Información del Cliente</div>
+                            <p><strong>${storage.cliente.nombre || 'No especificado'}</strong></p>
+                            ${storage.cliente.empresa ? `<p><strong>Empresa:</strong> ${storage.cliente.empresa}</p>` : ''}
+                            ${storage.cliente.direccion ? `<p><strong>Dirección:</strong> ${storage.cliente.direccion}</p>` : ''}
+                            ${storage.cliente.contacto ? `<p><strong>Contacto:</strong> ${storage.cliente.contacto}</p>` : ''}
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Detalles del Presupuesto</div>
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Válido por:</strong> 30 días</p>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Items del Presupuesto</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Cantidad</th>
+                                        <th>Valor Unitario</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            `;
+
+            // Agregar items
+            storage.items.forEach(item => {
+                const itemTotal = item.cantidad * item.valor;
+                html += `
+                    <tr>
+                        <td>${item.descripcion}</td>
+                        <td>${item.cantidad}</td>
+                        <td>$${item.valor.toLocaleString('es-CL')}</td>
+                        <td>$${itemTotal.toLocaleString('es-CL')}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="totals">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span>$${subtotal.toLocaleString('es-CL')}</span>
+                            </div>
+                            <div class="total-row">
+                                <span>IVA (19%):</span>
+                                <span>$${iva.toLocaleString('es-CL')}</span>
+                            </div>
+                            <div class="total-row">
+                                <span>TOTAL:</span>
+                                <span>$${total.toLocaleString('es-CL')}</span>
+                            </div>
+                        </div>
+                        
+            `;
+
+            // Agregar mensaje adicional si existe
+            if (mensajeAdicional) {
+                html += `
+                        <div class="message-box">
+                            <div class="section-title">Mensaje Adicional</div>
+                            <p>${mensajeAdicional.replace(/\n/g, '<br>')}</p>
+                        </div>
+                `;
+            }
+
+            html += `
+                        <div class="section">
+                            <div class="section-title">Condiciones</div>
+                            <ul>
+                                <li>Este presupuesto es válido por 30 días a partir de la fecha indicada.</li>
+                                <li>Los precios incluyen IVA (19%).</li>
+                                <li>Formas de pago: Transferencia bancaria, efectivo.</li>
+                                <li>Tiempo de entrega/acordar con el cliente.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer">
+                            <p>Atentamente,<br>
+                            <strong><span class="empresa-servi">SERVI</span> <span class="empresa-${storage.razonSocialActual === 'serviagro' ? 'agro' : 'moto'}">${storage.razonSocialActual === 'serviagro' ? 'AGRO' : 'MOTO MOLINA'}</span></strong></p>
+                            <p><em>Este presupuesto fue generado automáticamente con la aplicación de Presupuestos.</em></p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            return html;
+        }
+
+        // Actualizar vista previa del correo
+        function actualizarVistaPreviaCorreo() {
+            const mensajeAdicional = document.getElementById('emailMensaje').value;
+            const cuerpoCorreo = generarCuerpoCorreo(mensajeAdicional);
+            document.getElementById('emailPreview').textContent = cuerpoCorreo;
+        }
+
+        // Enviar correo usando mailto
+        function enviarCorreo() {
+            const destinatario = document.getElementById('emailDestinatario').value.trim();
+            const asunto = document.getElementById('emailAsunto').value.trim();
+            const mensajeAdicional = document.getElementById('emailMensaje').value.trim();
+            
+            if (!destinatario) {
+                alert('Por favor ingresa el correo del destinatario');
+                return;
+            }
+            
+            if (!asunto) {
+                alert('Por favor ingresa el asunto del correo');
+                return;
+            }
+            
+            // Generar cuerpo del correo en texto plano y HTML
+            const cuerpoTexto = generarCuerpoCorreo(mensajeAdicional);
+            const cuerpoHTML = generarCuerpoCorreoHTML(mensajeAdicional);
+            
+            // Codificar para URL
+            const asuntoCodificado = encodeURIComponent(asunto);
+            const cuerpoCodificado = encodeURIComponent(cuerpoTexto);
+            const cuerpoHTMLCodificado = encodeURIComponent(cuerpoHTML);
+            
+            // Crear enlace mailto con texto plano y HTML
+            const mailtoLink = `mailto:${destinatario}?subject=${asuntoCodificado}&body=${cuerpoCodificado}`;
+            
+            // Intentar abrir el cliente de correo
+            window.location.href = mailtoLink;
+            
+            // Cerrar modal
+            cerrarModalEmail();
+            
+            // Mostrar mensaje de éxito
+            mostrarMensajeExito('✓ Correo listo para enviar. Se abrirá tu cliente de correo.');
+            
+            // Incrementar número de presupuesto después de enviar
+            storage.ultimoNumeroPresupuesto++;
+            guardarDatos();
+            actualizarPreview();
+        }
+
+        // Event listener para actualizar vista previa cuando cambia el mensaje
+        document.getElementById('emailMensaje').addEventListener('input', actualizarVistaPreviaCorreo);
+
         // ========== FUNCIONALIDADES DE LA APLICACIÓN ==========
 
         // Función para cambiar razón social
@@ -297,16 +747,18 @@
             document.querySelectorAll('.business-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
+            
             if (razon === 'serviagro') {
                 document.querySelector('.business-btn:nth-child(1)').classList.add('active');
-                document.getElementById('currentBusiness').textContent = 'SERVI AGRO';
+                document.getElementById('currentBusiness').innerHTML = '<span class="business-name-servi">SERVI</span> <span class="business-name-agro">AGRO</span>';
+                storage.empresa = razonesSociales.serviagro;
             } else {
                 document.querySelector('.business-btn:nth-child(2)').classList.add('active');
-                document.getElementById('currentBusiness').textContent = 'SERVI MOTO MOLINA';
+                document.getElementById('currentBusiness').innerHTML = '<span class="business-name-servi">SERVI</span> <span class="business-name-moto">MOTO MOLINA</span>';
+                storage.empresa = razonesSociales.servimoto;
             }
 
             // Actualizar datos
-            storage.empresa = razonesSociales[razon];
             storage.razonSocialActual = razon;
             
             // Actualizar campos del formulario
@@ -355,10 +807,10 @@
             });
             if (storage.razonSocialActual === 'serviagro') {
                 document.querySelector('.business-btn:nth-child(1)').classList.add('active');
-                document.getElementById('currentBusiness').textContent = 'SERVI AGRO';
+                document.getElementById('currentBusiness').innerHTML = '<span class="business-name-servi">SERVI</span> <span class="business-name-agro">AGRO</span>';
             } else {
                 document.querySelector('.business-btn:nth-child(2)').classList.add('active');
-                document.getElementById('currentBusiness').textContent = 'SERVI MOTO MOLINA';
+                document.getElementById('currentBusiness').innerHTML = '<span class="business-name-servi">SERVI</span> <span class="business-name-moto">MOTO MOLINA</span>';
             }
 
             // Actualizar campos
@@ -539,7 +991,7 @@
                 <div class="budget-preview" id="pdfContent">
                     <div class="budget-header">
                         <div>
-                            <div class="budget-company">${storage.empresa.nombre}</div>
+                            <div class="budget-company">${storage.empresa.nombreFormateado}</div>
                             <div style="font-size: 12px; color: var(--color-text-secondary);">
                                 ${storage.empresa.rut ? `RUT: ${storage.empresa.rut}` : ''}
                                 ${storage.empresa.direccion ? `<br>${storage.empresa.direccion}` : ''}
@@ -638,7 +1090,7 @@
                 <div class="budget-preview">
                     <div class="budget-header">
                         <div>
-                            <div class="budget-company">${storage.empresa.nombre}</div>
+                            <div class="budget-company">${storage.empresa.nombreFormateado}</div>
                             <div style="font-size: 12px; color: var(--color-text-secondary);">
                                 ${storage.empresa.rut ? `RUT: ${storage.empresa.rut}` : ''}
                                 ${storage.empresa.direccion ? `<br>${storage.empresa.direccion}` : ''}
@@ -723,6 +1175,34 @@
             }, 2000);
         }
 
+        // Función para escribir texto con estilos en PDF
+        function escribirTextoConEstilosPDF(doc, texto, x, y) {
+            if (texto === "SERVI AGRO" || texto === "SERVI MOTO MOLINA") {
+                const partes = texto.split(' ');
+                const servi = partes[0]; // "SERVI"
+                const resto = partes.slice(1).join(' '); // "AGRO" o "MOTO MOLINA"
+                
+                // Escribir "SERVI" en negrita
+                doc.setFont('helvetica', 'bold');
+                doc.text(servi, x, y);
+                
+                // Calcular ancho de "SERVI"
+                const anchoServi = doc.getTextWidth(servi);
+                
+                // Escribir el resto en rojo
+                doc.setTextColor(255, 0, 0); // Rojo
+                doc.setFont('helvetica', 'normal');
+                doc.text(resto, x + anchoServi + 2, y); // +2 para un pequeño espacio
+                
+                // Restaurar color
+                doc.setTextColor(0, 0, 0);
+                return;
+            }
+            
+            // Si no es uno de los nombres especiales, escribir normal
+            doc.text(texto, x, y);
+        }
+
         function generarPDF() {
             if (storage.items.length === 0) {
                 alert('Agrega items al presupuesto antes de generar el PDF');
@@ -748,7 +1228,10 @@
             // Información de la empresa
             doc.setFontSize(11);
             doc.setFont('helvetica', 'bold');
-            doc.text(storage.empresa.nombre, margin, yPos);
+            
+            // Usar función especial para escribir el nombre con estilos
+            escribirTextoConEstilosPDF(doc, storage.empresa.nombre, margin, yPos);
+            
             doc.setFont('helvetica', 'normal');
             yPos += 6;
             
@@ -890,6 +1373,15 @@
                             font-weight: bold;
                             font-size: 16pt;
                             color: #000;
+                        }
+                        
+                        .budget-company-servi {
+                            font-weight: 900 !important;
+                        }
+                        
+                        .budget-company-agro, .budget-company-moto {
+                            color: #e74c3c !important;
+                            font-weight: bold !important;
                         }
                         
                         .budget-number {
