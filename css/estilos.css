@@ -1,833 +1,559 @@
-
-        :root {
-            --color-primary: #208090;
-            --color-primary-hover: #1a6673;
-            --color-bg: #f5f5f5;
-            --color-surface: #b2b0b077;
-            --color-text: #1a1a1a;
-            --color-text-secondary: #666666;
-            --color-success: #27ae60;
-            --color-danger: #e74c3c;
-            --color-warning: #f39c12;
-            --color-email: #9b59b6;
-            --radius: 8px;
-            --shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            padding: 20px;
-            /* Añadir padding para evitar que el contenido toque los bordes en móviles */
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            background: var(--color-surface);
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-
-        .header-left h1 {
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            color: var(--color-text-secondary);
-            font-size: 14px;
-        }
-
-        .business-selector {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .business-badge {
-            background: var(--color-primary);
-            color: white;
-            padding: 8px 16px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        /* Estilos especiales para nombres de empresa */
-        .business-name {
-            font-weight: bold;
-        }
-        
-        .business-name-servi {
-            font-weight: 900;
-        }
-        
-        .business-name-agro {
-            color: #e74c3c;
-            font-weight: 600;
-        }
-        
-        .business-name-moto {
-            color: #e74c3c;
-            font-weight: 600;
-        }
-
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .layout {
-                grid-template-columns: 1fr;
-            }
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-        }
-
-        .panel {
-            background: var(--color-surface);
-            padding: 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            font-family: inherit;
-            font-size: 14px;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(32, 128, 144, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn-primary {
-            background: var(--color-primary);
-            color: white;
-            width: 100%;
-        }
-
-        .btn-primary:hover, .btn-primary:active {
-            background: var(--color-primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(32, 128, 144, 0.3);
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: var(--color-text);
-            margin-top: 5px;
-        }
-
-        .btn-secondary:hover, .btn-secondary:active {
-            background: #e0e0e0;
-        }
-
-        .btn-danger {
-            background: var(--color-danger);
-            color: white;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-danger:hover, .btn-danger:active {
-            background: #c0392b;
-        }
-
-        .btn-export {
-            background: var(--color-success);
-            color: white;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .btn-export:hover, .btn-export:active {
-            background: #229954;
-        }
-
-        .btn-email {
-            background: var(--color-email);
-            color: white;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .btn-email:hover, .btn-email:active {
-            background: #8e44ad;
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--color-primary);
-        }
-
-        .item-list {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-
-        .item-card {
-            background: #f9f9f9;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--color-primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .item-info {
-            flex: 1;
-        }
-
-        .item-name {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .item-details {
-            font-size: 12px;
-            color: var(--color-text-secondary);
-        }
-
-        .item-price {
-            font-weight: 700;
-            color: var(--color-primary);
-            min-width: 80px;
-            text-align: right;
-        }
-
-        .btn-remove {
-            background: var(--color-danger);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-left: 10px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .budget-preview {
-            background: #fafafa;
-            padding: 20px;
-            border-radius: var(--radius);
-            border: 1px solid #e0e0e0;
-        }
-
-        .budget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--color-primary);
-        }
-
-        .budget-company {
-            font-weight: 700;
-            font-size: 16px;
-        }
-        
-        .budget-company-servi {
-            font-weight: 900;
-        }
-        
-        .budget-company-agro {
-            color: #e74c3c;
-            font-weight: 700;
-        }
-        
-        .budget-company-moto {
-            color: #e74c3c;
-            font-weight: 700;
-        }
-
-        .budget-number {
-            background: var(--color-primary);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-
-        .budget-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .detail-item {
-            font-size: 13px;
-        }
-
-        .detail-label {
-            color: var(--color-text-secondary);
-            margin-bottom: 2px;
-        }
-
-        .detail-value {
-            font-weight: 600;
-        }
-
-        .budget-items {
-            margin-bottom: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        .table thead {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .table th, .table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table tbody tr:hover {
-            background: #f5f5f5;
-        }
-
-        .table td:nth-child(2), .table td:nth-child(3), .table td:nth-child(4) {
-            text-align: right;
-        }
-
-        .budget-totals {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-            padding: 15px;
-            background: #f8f9fa;
-            border: 2px solid var(--color-primary);
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        .total-row {
-            display: flex;
-            gap: 15px;
-            font-weight: 600;
-        }
-
-        .total-label {
-            min-width: 100px;
-            color: var(--color-text);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--color-text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-
-        .recent-items {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-
-        .recent-items-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .recent-item {
-            padding: 5px;
-            margin: 3px 0;
-            background: white;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.2s;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .recent-item:hover, .recent-item:active {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        /* Estilos para la ventana de impresión */
-        .print-only {
-            display: none;
-        }
-
-        @media print {
-            /* Ocultar todo excepto el presupuesto */
-            body * {
-                visibility: hidden;
-            }
-            
-            #printableBudget, #printableBudget * {
-                visibility: visible;
-            }
-            
-            #printableBudget {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            
-            /* Estilos específicos para impresión A4 */
-            @page {
-                size: A4;
-                margin: 20mm;
-            }
-            
-            body {
-                background: white;
-                font-size: 12pt;
-                line-height: 1.4;
-                color: #000;
-            }
-            
-            .budget-preview {
-                border: none;
-                padding: 0;
-                box-shadow: none;
-                background: white;
-            }
-            
-            .budget-header {
-                border-bottom: 2px solid #000;
-                margin-bottom: 20px;
-                padding-bottom: 15px;
-            }
-            
-            .budget-number {
-                background: var(--color-primary);
-                color: white;
-                padding: 5px 10px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            .table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 20px 0;
-                font-size: 11pt;
-            }
-            
-            .table th {
-                background: var(--color-primary);
-                color: white;
-                font-weight: bold;
-                padding: 8px;
-                text-align: left;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            .table td {
-                padding: 8px;
-                border-bottom: 1px solid #ddd;
-            }
-            
-            .table tbody tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-            
-            .budget-totals {
-                background: #f8f9fa;
-                color: #000;
-                padding: 15px;
-                margin-top: 20px;
-                border: 2px solid #000;
-                border-radius: 0;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            .total-label, .total-row span:last-child {
-                color: #000;
-            }
-            
-            /* Ocultar botones en impresión */
-            .btn-remove, .btn, .recent-items, #successMessage {
-                display: none !important;
-            }
-            
-            /* Asegurar que no haya saltos de página dentro de elementos importantes */
-            .budget-header, .budget-totals {
-                page-break-inside: avoid;
-            }
-            
-            .table {
-                page-break-inside: auto;
-            }
-            
-            .table tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
-            }
-            
-            /* Mejorar la legibilidad */
-            h1, h2, h3 {
-                color: #000;
-            }
-            
-            .detail-label {
-                color: #666;
-            }
-            
-            /* Estilos para nombres en impresión */
-            .budget-company-servi {
-                font-weight: 900 !important;
-            }
-            
-            .budget-company-agro, .budget-company-moto {
-                color: #e74c3c !important;
-                font-weight: 700 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-
-        .business-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .business-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--color-primary);
-            background: white;
-            color: var(--color-primary);
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .business-btn:hover, .business-btn:active {
-            background: var(--color-primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .business-btn.active {
-            background: var(--color-primary);
-            color: white;
-            border-color: var(--color-primary-hover);
-        }
-
-        /* Botón de instalación PWA */
-        .install-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .install-button:hover, .install-button:active {
-            background: var(--color-primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .install-button.show {
-            display: flex;
-            animation: slideInUp 0.3s ease;
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Estilos para modo offline */
-        .offline-status {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #f39c12;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            font-size: 14px;
-            z-index: 1001;
-            display: none;
-        }
-
-        .offline-status.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Modal para compartir por correo */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal {
-            background: white;
-            border-radius: var(--radius);
-            padding: 25px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--color-primary);
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--color-text-secondary);
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            color: var(--color-danger);
-        }
-
-        .email-preview {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            max-height: 300px;
-            overflow-y: auto;
-            font-size: 13px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            font-family: 'Courier New', monospace;
-        }
-
-        .email-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .email-actions .btn {
-            flex: 1;
-        }
-
-        /* Mejoras para dispositivos táctiles */
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-                padding-top: calc(10px + env(safe-area-inset-top));
-                padding-bottom: calc(10px + env(safe-area-inset-bottom));
-            }
-            
-            .panel {
-                padding: 15px;
-            }
-            
-            .btn {
-                padding: 12px 16px;
-            }
-            
-            input, select, textarea {
-                padding: 12px;
-            }
-            
-            .install-button {
-                bottom: 15px;
-                right: 15px;
-                left: 15px;
-                justify-content: center;
-            }
-            
-            .modal {
-                width: 95%;
-                padding: 20px;
-            }
-            
-            .email-actions {
-                flex-direction: column;
-            }
-        }
-
-        /* Mejoras para modo standalone (aplicación instalada) */
-        @media (display-mode: standalone) {
-            body {
-                padding-top: calc(20px + env(safe-area-inset-top));
-            }
-            
-            header {
-                margin-top: env(safe-area-inset-top);
-            }
-        }
-
-        /* Grupo de botones de exportación */
-        .export-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 600px) {
-            .export-buttons {
-                grid-template-columns: 1fr;
-            }
-        }
-
+:root {
+    --color-primary: #208090;
+    --color-primary-hover: #1a6673;
+    --color-bg: #f5f5f5;
+    --color-surface: #e5e7e9c9;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-success: #27ae60;
+    --color-danger: #e74c3c;
+    --color-warning: #f39c12;
+    --color-email: #9b59b6;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== ESTILOS FIJOS SIN SCROLL GLOBAL ========== */
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========== HEADER FLEXIBLE ========== */
+header {
+    flex-shrink: 0;
+    background: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;
+    max-height: 100px;
+}
+
+.header-left h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.business-selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.business-badge {
+    background: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* ========== LAYOUT PRINCIPAL FLEXIBLE ========== */
+.layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    min-height: 0;
+    overflow: hidden;
+    height: calc(100vh - 160px); /* 100vh menos header y márgenes */
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: calc(100vh - 180px);
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        min-height: 100px;
+        max-height: 120px;
+    }
+    
+    .header-left h1 {
+        font-size: 20px;
+    }
+}
+
+/* ========== PANELES CON SCROLL INTERNO ========== */
+.panel {
+    background: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Panel izquierdo - Formulario */
+.panel:first-child {
+    overflow-y: auto;
+    max-height: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+}
+
+.panel:first-child::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel:first-child::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.panel:first-child::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 3px;
+}
+
+/* Panel derecho - Vista previa */
+.panel:last-child {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ========== CONTENIDO DEL FORMULARIO ========== */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-primary);
+    flex-shrink: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    flex-shrink: 0;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(32, 128, 144, 0.1);
+}
+
+/* ========== BOTONES DEL FORMULARIO ========== */
+.btn {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background: var(--color-primary-hover);
+}
+
+.btn-danger {
+    background: var(--color-danger);
+    color: white;
+    width: 100%;
+    margin-top: auto;
+    padding: 14px;
+}
+
+.btn-danger:hover, .btn-danger:active {
+    background: #c0392b;
+}
+
+/* ========== BOTONES DE EXPORTACIÓN ========== */
+.export-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 20px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .export-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-export {
+    background: var(--color-success);
+    color: white;
+}
+
+.btn-export:hover, .btn-export:active {
+    background: #229954;
+}
+
+.btn-email {
+    background: var(--color-email);
+    color: white;
+}
+
+.btn-email:hover, .btn-email:active {
+    background: #8e44ad;
+}
+
+/* ========== VISTA PREVIA DEL PRESUPUESTO ========== */
+#budgetPreview {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+}
+
+#budgetPreview::-webkit-scrollbar {
+    width: 6px;
+}
+
+#budgetPreview::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#budgetPreview::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 3px;
+}
+
+.empty-state {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* ========== ITEMS RECIENTES ========== */
+.recent-items {
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.recent-item {
+    padding: 5px;
+    margin: 3px 0;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.recent-item:hover, .recent-item:active {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* ========== ESTILOS DEL PRESUPUESTO ========== */
+.budget-preview {
+    flex: 1;
+    padding: 5px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.table thead {
+    background: var(--color-primary);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.budget-totals {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 2px solid var(--color-primary);
+    border-radius: 5px;
+    margin-top: 20px;
+    flex-shrink: 0;
+}
+
+/* ========== BOTÓN DE INSTALACIÓN PWA ========== */
+.install-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.install-button.show {
+    display: flex;
+}
+
+/* ========== ESTADO OFFLINE ========== */
+.offline-status {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #f39c12;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    z-index: 1001;
+    display: none;
+}
+
+.offline-status.show {
+    display: block;
+}
+
+/* ========== MODAL ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: var(--radius);
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.email-preview {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* ========== RESPONSIVE MEJORADO ========== */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .layout {
+        height: calc(100vh - 140px);
+    }
+    
+    .panel {
+        padding: 15px;
+    }
+    
+    header {
+        padding: 15px;
+    }
+    
+    .install-button {
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
+        justify-content: center;
+    }
+}
+
+/* Mantener los estilos existentes que no fueron modificados */
+.business-name-servi {
+    font-weight: 900;
+}
+
+.business-name-agro {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.business-name-moto {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.business-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.business-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--color-primary);
+    background: white;
+    color: var(--color-primary);
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.business-btn.active {
+    background: var(--color-primary);
+    color: white;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.item-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.btn-remove {
+    background: var(--color-danger);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.budget-company-servi {
+    font-weight: 900;
+}
+
+.budget-company-agro, .budget-company-moto {
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+/* ========== ESTILOS DE IMPRESIÓN (SIN CAMBIOS) ========== */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #printableBudget, #printableBudget * {
+        visibility: visible;
+    }
+    
+    #printableBudget {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
 
 
 
