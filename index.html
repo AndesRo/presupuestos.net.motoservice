@@ -77,17 +77,24 @@
     </div>
 
     <div class="container">
-        <header>
-            <div class="header-left">
-                <h1>📊GESTION PRESUPUESTOS</h1>
-                <p class="subtitle">Genera presupuestos de manera Profesional [by AndesDev]</p>
-            </div>
-            <div class="business-selector">
-                <div class="business-badge" id="currentBusiness">
-                    <span class="business-name-servi">SERVI</span> <span class="business-name-agro">AGRO</span>
-                </div>
-            </div>
-        </header>
+   <header>
+  <div class="header-left">
+    <img src="/assets/logo.png" alt="Logo de la empresa" class="header-logo">
+
+    <div class="header-text">
+      <h1>PRESUPUESTOS</h1>
+      <p class="subtitle">Version actualizada 1.0</p>
+    </div>
+  </div>
+
+  <div class="business-selector">
+    <div class="business-badge" id="currentBusiness">
+      <span class="business-name-servi">SERVI</span>
+      <span class="business-name-agro">AGRO</span>
+    </div>
+  </div>
+</header>
+
 
         <div class="layout">
             <!-- Panel Izquierdo: Formulario -->
@@ -177,7 +184,7 @@
 
                 <div class="export-buttons">
                     <button class="btn btn-export" onclick="generarPDF()">📥 Descargar PDF</button>
-                    <button class="btn btn-export" onclick="imprimirPresupuesto()" style="background: #3498db;">🖨️ Imprimir</button>
+                    <button class="btn btn-export" onclick="imprimirPresupuesto()" style="background: #1c0580;">🖨️ Imprimir</button>
                     <button class="btn btn-email" onclick="compartirPorCorreo()">📧 Enviar por Correo</button>
                 </div>
             </div>
